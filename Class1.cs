@@ -267,6 +267,7 @@ namespace MysteryPlanet
             RT.SetValue("randomizeRotationRate", false);
             base.ModHelper.Console.WriteLine(":     RotateTransform done.");
 
+            /*
             GameObject cloudsBottom = new GameObject();
             cloudsBottom.SetActive(false);
             cloudsBottom.transform.parent = cloudsMain.transform;
@@ -284,9 +285,10 @@ namespace MysteryPlanet
             TessSphereSectorToggle TSST = cloudsBottom.AddComponent<TessSphereSectorToggle>();
             TSST.SetValue("_sector", sector);
             base.ModHelper.Console.WriteLine(":     TessSphereSectorToggle done.");
+            */
 
             cloudsTop.SetActive(true);
-            cloudsBottom.SetActive(true);
+            //cloudsBottom.SetActive(true);
             cloudsMain.SetActive(true);
 
             if (_doMeshLater)
