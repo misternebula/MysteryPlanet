@@ -12,7 +12,6 @@ namespace MysteryPlanet
     public class MainClass : ModBehaviour
     {
         GameObject _invisiblePlanet;
-
         public bool _doMeshLater = false;
 
         private void Start()
