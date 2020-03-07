@@ -297,6 +297,16 @@ namespace MysteryPlanet
                 MF.mesh = GameObject.Find("CloudsTopLayer_QM").GetComponent<MeshFilter>().mesh;
             }
 
+            base.ModHelper.Console.WriteLine(": Beginning water generation...");
+
+            GameObject waterBase = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            waterBase.SetActive(false);
+            waterBase.transform.parent = body.transform;
+            waterBase.DestroyAllComponents<SphereCollider>();
+            waterBase.transform.localScale = new Vector3(505, 505, 505);
+
+
+
             base.ModHelper.Console.WriteLine(": All components finalized. Returning object...");
 
             return body;
