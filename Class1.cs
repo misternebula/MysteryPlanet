@@ -45,16 +45,10 @@ namespace MysteryPlanet
                     RenderTexture temp = new RenderTexture(512, 512, 16);
                     temp.Create();
                     item.SetValue("_longExposureSnapshotTexture", temp);
-                    base.ModHelper.Console.WriteLine(Convert.ToString(item.GetValue<int>("_origCullingMask"), 2));
-                    base.ModHelper.Console.WriteLine(Convert.ToString(OWLayerMask.probeLongExposureMask.value, 2));
-                    base.ModHelper.Console.WriteLine(Convert.ToString(item.GetValue<int>("_origCullingMask") | OWLayerMask.probeLongExposureMask.value, 2));
-                    base.ModHelper.Console.WriteLine(item.GetValue<int>("_origCullingMask") | OWLayerMask.probeLongExposureMask.value);
                     temp.SetValue("_origCullingMask", item.GetValue<int>("_origCullingMask") | OWLayerMask.probeLongExposureMask.value);
                 }
 
                 _invisiblePlanet = GenerateBody();
-
-                
 
                 _invisiblePlanet.transform.parent = Locator.GetRootTransform();
                 _invisiblePlanet.transform.position = new Vector3(0, 0, 31000);
@@ -70,7 +64,6 @@ namespace MysteryPlanet
 
                 foreach (var item in GameObject.FindObjectsOfType<ProbeCamera>())
                 {
-                    base.ModHelper.Console.WriteLine(item.gameObject.name);
                     RenderTexture temp = new RenderTexture(512, 512, 16);
                     temp.Create();
                     item.SetValue("_longExposureSnapshotTexture", temp);
