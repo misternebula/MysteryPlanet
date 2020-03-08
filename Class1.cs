@@ -13,6 +13,11 @@ namespace MysteryPlanet
     {
         GameObject _invisiblePlanet;
         public bool _doMeshLater = false;
+        public bool _doMeshOnWakeUp = false;
+        public static GameObject sectorGO;
+
+        public MeshFilter MFlater;
+        public MeshRenderer MRlater;
 
         private void Start()
         {
@@ -22,6 +27,8 @@ namespace MysteryPlanet
             IModEvents events = base.ModHelper.Events;
             events.OnEvent = (Action<MonoBehaviour, Events>)Delegate.Combine(events.OnEvent, new Action<MonoBehaviour, Events>(this.OnEvent));
 
+            GlobalMessenger.AddListener("WakeUp", OnWakeUp);
+
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
@@ -30,6 +37,18 @@ namespace MysteryPlanet
             SceneIntegrator.isDLCEnabled = true;
 
             base.ModHelper.Console.WriteLine("Setup finished!");
+        }
+
+        void OnWakeUp()
+        {
+            if (_doMeshOnWakeUp)
+            {
+                base.ModHelper.Console.WriteLine(": Trying mesh again...");
+                MFlater.mesh = GameObject.Find("CloudsTopLayer_QM").GetComponent<MeshFilter>().mesh;
+                base.ModHelper.Console.WriteLine(": Trying materials again...");
+                MRlater.materials = GameObject.Find("CloudsTopLayer_QM").GetComponent<MeshRenderer>().materials;
+                base.ModHelper.Console.WriteLine(": Done!");
+            }
         }
 
         private void OnEvent(MonoBehaviour behaviour, Events ev)
@@ -53,6 +72,57 @@ namespace MysteryPlanet
                 _invisiblePlanet.transform.parent = Locator.GetRootTransform();
                 _invisiblePlanet.transform.position = new Vector3(0, 0, 30000);
                 _invisiblePlanet.SetActive(true);
+
+                Sector sector = _invisiblePlanet.GetComponentInChildren<Sector>();
+
+                /*
+                if (sector.GetValue<GameObject>("_triggerRoot") != null)
+                {
+                    base.ModHelper.Console.WriteLine("TriggerRoot is not null!");
+                    base.ModHelper.Console.WriteLine(sector.GetValue<GameObject>("_triggerRoot").name);
+                }
+                else
+                {
+                    base.ModHelper.Console.WriteLine("TriggerRoot is null!");
+                }
+
+                if (sector.GetValue<ProximityTrigger>("_proximityTrigger") != null)
+                {
+                    base.ModHelper.Console.WriteLine("ProxTrigger is not null!");
+                }
+                else
+                {
+                    base.ModHelper.Console.WriteLine("ProxTrigger is null!");
+                }
+
+                if (sector.GetValue<OWTriggerVolume>("_owTriggerVolume") != null)
+                {
+                    base.ModHelper.Console.WriteLine("OWTrigVol is not null!");
+                }
+                else
+                {
+                    base.ModHelper.Console.WriteLine("OWTrigVol is null!");
+                }
+
+                if (sector.GetValue<VolumeExcluder>("_volumeExcluder") != null)
+                {
+                    base.ModHelper.Console.WriteLine("VolEx is not null!");
+                }
+                else
+                {
+                    base.ModHelper.Console.WriteLine("VolEx is null!");
+                }
+
+                if (sector.GetValue<OWRigidbody>("_attachedOWRigidbody") != null)
+                {
+                    base.ModHelper.Console.WriteLine("OWRB is not null!");
+                }
+                else
+                {
+                    base.ModHelper.Console.WriteLine("OWRB is null!");
+                }
+                */
+                base.ModHelper.Console.WriteLine(sectorGO.GetAttachedOWRigidbody(false).name);
             }
         }
 
@@ -199,12 +269,12 @@ namespace MysteryPlanet
             MM.SetValue("_markerType", MM.GetType().GetNestedType("MarkerType", BindingFlags.NonPublic).GetField("Planet").GetValue(MM));
             base.ModHelper.Console.WriteLine(": MapMarker done.");
 
-            /*
             base.ModHelper.Console.WriteLine(": Beginning sector generation...");
 
             GameObject sectorBase = new GameObject();
             sectorBase.SetActive(false);
             sectorBase.transform.parent = body.transform;
+            sectorGO = sectorBase;
             base.ModHelper.Console.WriteLine(": SECTOR :");
 
             SphereShape sphereshape = sectorBase.AddComponent<SphereShape>();
@@ -221,10 +291,11 @@ namespace MysteryPlanet
 
             Sector sector = sectorBase.AddComponent<Sector>();
             sector.SetValue("_name", Sector.Name.InvisiblePlanet);
+            sector.SetValue("__attachedOWRigidbody", OWRB);
+            sector.SetValue("_subsectors", new List<Sector>());
 
             sectorBase.SetActive(true);
             base.ModHelper.Console.WriteLine(":     Sector done.");
-            */
 
             base.ModHelper.Console.WriteLine(": Beginning cloud generation...");
 
@@ -253,8 +324,16 @@ namespace MysteryPlanet
             base.ModHelper.Console.WriteLine(":     MeshFilter done.");
 
             MeshRenderer MR = cloudsTop.AddComponent<MeshRenderer>();
+            try
+            {
+                MR.materials = GameObject.Find("CloudsTopLayer_QM").GetComponent<MeshRenderer>().materials;
+            }
+            catch
+            {
+                base.ModHelper.Console.WriteLine(":     Error in setting materials! Queuing for later...");
+                _doMeshLater = true;
+            }
             base.ModHelper.Console.WriteLine(":     MeshRenderer done.");
-            MR.materials = GameObject.Find("CloudsTopLayer_QM").GetComponent<MeshRenderer>().materials;
 
             RotateTransform RT = cloudsTop.AddComponent<RotateTransform>();
             RT.SetValue("_localAxis", Vector3.up);
@@ -262,7 +341,6 @@ namespace MysteryPlanet
             RT.SetValue("randomizeRotationRate", false);
             base.ModHelper.Console.WriteLine(":     RotateTransform done.");
 
-            /*
             GameObject cloudsBottom = new GameObject();
             cloudsBottom.SetActive(false);
             cloudsBottom.transform.parent = cloudsMain.transform;
@@ -280,16 +358,30 @@ namespace MysteryPlanet
             TessSphereSectorToggle TSST = cloudsBottom.AddComponent<TessSphereSectorToggle>();
             TSST.SetValue("_sector", sector);
             base.ModHelper.Console.WriteLine(":     TessSphereSectorToggle done.");
-            */
 
             cloudsTop.SetActive(true);
-            //cloudsBottom.SetActive(true);
+            cloudsBottom.SetActive(true);
             cloudsMain.SetActive(true);
 
             if (_doMeshLater)
             {
-                base.ModHelper.Console.WriteLine(": Trying mesh again...");
-                MF.mesh = GameObject.Find("CloudsTopLayer_QM").GetComponent<MeshFilter>().mesh;
+                try
+                {
+                    base.ModHelper.Console.WriteLine(": Trying mesh again...");
+                    MF.mesh = GameObject.Find("CloudsTopLayer_QM").GetComponent<MeshFilter>().mesh;
+                    base.ModHelper.Console.WriteLine(": Trying materials again...");
+                    MR.materials = GameObject.Find("CloudsTopLayer_QM").GetComponent<MeshRenderer>().materials;
+                    base.ModHelper.Console.WriteLine(": Done!");
+                }
+                catch
+                {
+                    base.ModHelper.Console.WriteLine(": Error!");
+                    base.ModHelper.Console.WriteLine(": Queuing for WakeUp...");
+                    _doMeshOnWakeUp = true;
+                    _doMeshLater = false;
+                    MFlater = MF;
+                    MRlater = MR;
+                }
             }
 
             base.ModHelper.Console.WriteLine(": Beginning water generation...");
@@ -297,7 +389,7 @@ namespace MysteryPlanet
             GameObject waterBase = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             waterBase.SetActive(false);
             waterBase.transform.parent = body.transform;
-            waterBase.transform.localScale = new Vector3(1.01f, 1.01f, 1.01f);
+            waterBase.transform.localScale = new Vector3(1.005f, 1.005f, 1.005f);
             waterBase.DestroyAllComponents<SphereCollider>();
 
             waterBase.SetActive(true);
