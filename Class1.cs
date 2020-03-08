@@ -18,6 +18,7 @@ namespace MysteryPlanet
 
         public MeshFilter MFlater;
         public MeshRenderer MRlater;
+        public TessellatedSphereRenderer cloudRender;
 
         private void Start()
         {
@@ -47,6 +48,8 @@ namespace MysteryPlanet
                 MFlater.mesh = GameObject.Find("CloudsTopLayer_QM").GetComponent<MeshFilter>().mesh;
                 base.ModHelper.Console.WriteLine(": Trying materials again...");
                 MRlater.materials = GameObject.Find("CloudsTopLayer_QM").GetComponent<MeshRenderer>().materials;
+                cloudRender.tessellationMeshGroup = GameObject.Find("CloudsBottomLayer_QM").GetComponent<TessellatedSphereRenderer>().tessellationMeshGroup;
+                cloudRender.sharedMaterials = GameObject.Find("CloudsBottomLayer_QM").GetComponent<TessellatedSphereRenderer>().sharedMaterials;
                 base.ModHelper.Console.WriteLine(": Done!");
             }
         }
@@ -313,7 +316,7 @@ namespace MysteryPlanet
             MeshFilter MF = cloudsTop.AddComponent<MeshFilter>();
             try
             {
-                MF.mesh = GameObject.Find("CloudsTopLayer_QM").GetComponent<MeshFilter>().mesh;
+                MF.mesh = GameObject.Find("CloudsTopLayer_GD").GetComponent<MeshFilter>().mesh;
             }
             catch
             {
@@ -326,7 +329,7 @@ namespace MysteryPlanet
             MeshRenderer MR = cloudsTop.AddComponent<MeshRenderer>();
             try
             {
-                MR.materials = GameObject.Find("CloudsTopLayer_QM").GetComponent<MeshRenderer>().materials;
+                MR.materials = GameObject.Find("CloudsTopLayer_GD").GetComponent<MeshRenderer>().materials;
             }
             catch
             {
@@ -341,24 +344,92 @@ namespace MysteryPlanet
             RT.SetValue("randomizeRotationRate", false);
             base.ModHelper.Console.WriteLine(":     RotateTransform done.");
 
+            SectorCullGroup scg = cloudsTop.AddComponent<SectorCullGroup>();
+            scg.SetValue("_sector", sector);
+            scg.SetValue("_occlusionCulling", true);
+            scg.SetValue("_dynamicCullingBounds", false);
+            scg.SetValue("_particleSystemSuspendMode", CullGroup.ParticleSystemSuspendMode.Pause);
+            scg.SetValue("_waitForStreaming", false);
+
             GameObject cloudsBottom = new GameObject();
             cloudsBottom.SetActive(false);
             cloudsBottom.transform.parent = cloudsMain.transform;
-            cloudsBottom.transform.localScale = new Vector3(390, 390, 390);
+            cloudsBottom.transform.localScale = new Vector3(380, 380, 380);
             base.ModHelper.Console.WriteLine(": BOTTOM LAYER :");
 
             TessellatedSphereRenderer TSR = cloudsBottom.AddComponent<TessellatedSphereRenderer>();
-            TSR.tessellationMeshGroup = GameObject.Find("CloudsBottomLayer_QM").GetComponent<TessellatedSphereRenderer>().tessellationMeshGroup;
-            TSR.sharedMaterials = GameObject.Find("CloudsBottomLayer_QM").GetComponent<TessellatedSphereRenderer>().sharedMaterials;
+            try
+            {
+                TSR.tessellationMeshGroup = GameObject.Find("CloudsBottomLayer_GD").GetComponent<TessellatedSphereRenderer>().tessellationMeshGroup;
+                TSR.sharedMaterials = GameObject.Find("CloudsBottomLayer_GD").GetComponent<TessellatedSphereRenderer>().sharedMaterials;
+            }
+            catch
+            {
+                base.ModHelper.Console.WriteLine(":     Error in setting value! Queuing for later...");
+                _doMeshLater = true;
+            }
             TSR.maxLOD = 6;
             TSR.LODBias = 0;
             TSR.LODRadius = 1f;
+            cloudRender = TSR;
             base.ModHelper.Console.WriteLine(":     TessellatedSphereRenderer done.");
 
             TessSphereSectorToggle TSST = cloudsBottom.AddComponent<TessSphereSectorToggle>();
             TSST.SetValue("_sector", sector);
             base.ModHelper.Console.WriteLine(":     TessSphereSectorToggle done.");
 
+            
+            GameObject cloudsFluid = new GameObject();
+            cloudsFluid.layer = 17;
+            cloudsFluid.SetActive(false);
+            cloudsFluid.transform.parent = cloudsMain.transform;
+            base.ModHelper.Console.WriteLine(": CLOUD FLUID LAYER :");
+
+            SphereCollider cloudSC = cloudsFluid.AddComponent<SphereCollider>();
+            cloudSC.isTrigger = true;
+            cloudSC.radius = 400f;
+            base.ModHelper.Console.WriteLine(":     SphereCollider done.");
+
+            OWShellCollider cloudShell = cloudsFluid.AddComponent<OWShellCollider>();
+            cloudShell.SetValue("_innerRadius", 380f);
+            base.ModHelper.Console.WriteLine(":     OWShellCollider done.");
+
+            CloudLayerFluidVolume cloudLayer = cloudsFluid.AddComponent<CloudLayerFluidVolume>();
+            cloudLayer.SetValue("_layer", 5);
+            cloudLayer.SetValue("_priority", 1);
+            cloudLayer.SetValue("_density", 1.2f);
+            cloudLayer.SetValue("_fluidType", FluidVolume.Type.CLOUD);
+            cloudLayer.SetValue("_allowShipAutoroll", true);
+            cloudLayer.SetValue("_disableOnStart", false);
+            base.ModHelper.Console.WriteLine(":     CloudLayerFluidVolume done.");
+
+            GameObject air = new GameObject();
+            air.layer = 17;
+            air.SetActive(false);
+            air.transform.parent = cloudsMain.transform;
+            base.ModHelper.Console.WriteLine(": AIR :");
+
+            SphereCollider atmoSC = air.AddComponent<SphereCollider>();
+            atmoSC.isTrigger = true;
+            atmoSC.radius = 400f;
+            base.ModHelper.Console.WriteLine(":     SphereCollider done.");
+
+            SimpleFluidVolume sfv = air.AddComponent<SimpleFluidVolume>();
+            sfv.SetValue("_layer", 5);
+            sfv.SetValue("_priority", 1);
+            sfv.SetValue("_density", 1.2f);
+            sfv.SetValue("_fluidType", FluidVolume.Type.AIR);
+            sfv.SetValue("_allowShipAutoroll", true);
+            sfv.SetValue("_disableOnStart", false);
+            base.ModHelper.Console.WriteLine(":     SimpleFluidVolume done.");
+
+            VisorRainEffectVolume vref = air.AddComponent<VisorRainEffectVolume>();
+            vref.SetValue("_rainDirection", VisorRainEffectVolume.RainDirection.Radial);
+            vref.SetValue("_layer", 0);
+            vref.SetValue("_priority", 0);
+            base.ModHelper.Console.WriteLine(":     VisorRainEffectVolume done.");
+
+            air.SetActive(true);
             cloudsTop.SetActive(true);
             cloudsBottom.SetActive(true);
             cloudsMain.SetActive(true);
@@ -371,7 +442,10 @@ namespace MysteryPlanet
                     MF.mesh = GameObject.Find("CloudsTopLayer_QM").GetComponent<MeshFilter>().mesh;
                     base.ModHelper.Console.WriteLine(": Trying materials again...");
                     MR.materials = GameObject.Find("CloudsTopLayer_QM").GetComponent<MeshRenderer>().materials;
+                    TSR.tessellationMeshGroup = GameObject.Find("CloudsBottomLayer_QM").GetComponent<TessellatedSphereRenderer>().tessellationMeshGroup;
+                    TSR.sharedMaterials = GameObject.Find("CloudsBottomLayer_QM").GetComponent<TessellatedSphereRenderer>().sharedMaterials;
                     base.ModHelper.Console.WriteLine(": Done!");
+
                 }
                 catch
                 {
@@ -386,14 +460,45 @@ namespace MysteryPlanet
 
             base.ModHelper.Console.WriteLine(": Beginning water generation...");
 
-            GameObject waterBase = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            GameObject waterBase = new GameObject();
             waterBase.SetActive(false);
+            waterBase.layer = 15;
             waterBase.transform.parent = body.transform;
             waterBase.transform.localScale = new Vector3(1.005f, 1.005f, 1.005f);
             waterBase.DestroyAllComponents<SphereCollider>();
+            base.ModHelper.Console.WriteLine(": WATER :");
+
+            TessellatedSphereRenderer tsr = waterBase.AddComponent<TessellatedSphereRenderer>();
+            tsr.tessellationMeshGroup = GameObject.Find("Ocean_GD").GetComponent<TessellatedSphereRenderer>().tessellationMeshGroup;
+            tsr.sharedMaterials = GameObject.Find("Ocean_GD").GetComponent<TessellatedSphereRenderer>().sharedMaterials;
+            tsr.maxLOD = 7;
+            tsr.LODBias = 2;
+            tsr.LODRadius = 2f;
+            base.ModHelper.Console.WriteLine(":     TessellatedSphereRenderer done.");
+
+            TessSphereSectorToggle toggle = waterBase.AddComponent<TessSphereSectorToggle>();
+            toggle.SetValue("_sector", sector);
+            base.ModHelper.Console.WriteLine(":     TessSphereSectorToggle done.");
+
+            OceanEffectController effectC = waterBase.AddComponent<OceanEffectController>();
+            effectC.SetValue("_sector", sector);
+            effectC.SetValue("_ocean", tsr);
+            base.ModHelper.Console.WriteLine(":     OceanEffectController done.");
 
             waterBase.SetActive(true);
 
+            GameObject sunov = new GameObject();
+            sunov.SetActive(false);
+            sunov.transform.parent = body.transform;
+
+            GiantsDeepSunOverrideVolume vol = sunov.AddComponent<GiantsDeepSunOverrideVolume>();
+            vol.SetValue("_sector", sector);
+            vol.SetValue("_cloudsOuterRadius", 400f);
+            vol.SetValue("_cloudsInnerRadius", 380f);
+            vol.SetValue("_waterOuterRadius", 502.5f);
+            vol.SetValue("_waterInnerRadius", 402.5f);
+
+            sunov.SetActive(true);
             base.ModHelper.Console.WriteLine(": All components finalized. Returning object...");
 
             return body;
