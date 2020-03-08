@@ -51,7 +51,7 @@ namespace MysteryPlanet
                 _invisiblePlanet = GenerateBody();
 
                 _invisiblePlanet.transform.parent = Locator.GetRootTransform();
-                _invisiblePlanet.transform.position = new Vector3(0, 0, 31000);
+                _invisiblePlanet.transform.position = new Vector3(0, 0, 30000);
                 _invisiblePlanet.SetActive(true);
             }
         }
@@ -195,10 +195,11 @@ namespace MysteryPlanet
             base.ModHelper.Console.WriteLine(":     ReferenceFrameVolume done.");
 
             var MM = body.AddComponent<MapMarker>();
-            MM.SetValue("_labelID", UITextType.LocationEye_Cap);
+            MM.SetValue("_labelID", UITextType.YouAreDeadMessage);
             MM.SetValue("_markerType", MM.GetType().GetNestedType("MarkerType", BindingFlags.NonPublic).GetField("Planet").GetValue(MM));
             base.ModHelper.Console.WriteLine(": MapMarker done.");
 
+            /*
             base.ModHelper.Console.WriteLine(": Beginning sector generation...");
 
             GameObject sectorBase = new GameObject();
@@ -223,6 +224,7 @@ namespace MysteryPlanet
 
             sectorBase.SetActive(true);
             base.ModHelper.Console.WriteLine(":     Sector done.");
+            */
 
             base.ModHelper.Console.WriteLine(": Beginning cloud generation...");
 
@@ -295,10 +297,10 @@ namespace MysteryPlanet
             GameObject waterBase = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             waterBase.SetActive(false);
             waterBase.transform.parent = body.transform;
+            waterBase.transform.localScale = new Vector3(1.01f, 1.01f, 1.01f);
             waterBase.DestroyAllComponents<SphereCollider>();
-            waterBase.transform.localScale = new Vector3(505, 505, 505);
 
-
+            waterBase.SetActive(true);
 
             base.ModHelper.Console.WriteLine(": All components finalized. Returning object...");
 
