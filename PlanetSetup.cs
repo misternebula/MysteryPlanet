@@ -2,8 +2,6 @@
 using OWML.ModHelper;
 using OWML.ModHelper.Events;
 using System;
-using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -24,7 +22,7 @@ namespace MysteryPlanet
             IModEvents events = base.ModHelper.Events;
             events.OnEvent = (Action<MonoBehaviour, Events>)Delegate.Combine(events.OnEvent, new Action<MonoBehaviour, Events>(this.OnEvent));
 
-            GlobalMessenger.AddListener("WakeUp", OnWakeUp);
+            //GlobalMessenger.AddListener("WakeUp", OnWakeUp);
 
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
@@ -34,11 +32,6 @@ namespace MysteryPlanet
             SceneIntegrator.isDLCEnabled = true;
 
             base.ModHelper.Console.WriteLine("Setup finished!");
-        }
-
-        void OnWakeUp()
-        {
-
         }
 
         private void OnEvent(MonoBehaviour behaviour, Events ev)
@@ -87,24 +80,16 @@ namespace MysteryPlanet
 
             body = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             body.transform.localScale = new Vector3(500, 500, 500);
-
             body.name = "invisibleplanet_body";
             body.SetActive(false);
 
-            MakeOrbitingAstroObject.Make(body);
-
+            MakeOrbitingAstroObject.Make(body, 0.02f, 12f);
             MakeRFVolume.Make(body);
-
-            
-
+            MakeMapMarker.Make(body);
             SECTOR = MakeSector.Make(body);
-
             MakeClouds.Make(body);
-
             MakeAir.Make(body);
-
             MakeWater.Make(body);
-
             MakeSunOverride.Make(body);
 
             base.ModHelper.Console.WriteLine(": All components finalized. Returning object...");

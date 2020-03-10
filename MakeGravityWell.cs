@@ -6,7 +6,7 @@ namespace MysteryPlanet
 {
     static class MakeGravityWell
     {
-        public static GravityVolume Make(GameObject body)
+        public static GravityVolume Make(GameObject body, float surfaceAccel)
         {
             GameObject GravityWell = new GameObject();
             GravityWell.transform.parent = body.transform;
@@ -23,7 +23,7 @@ namespace MysteryPlanet
             GV.SetValue("_layer", 3);
             GV.SetValue("_priority", 0);
             GV.SetValue("_alignmentPriority", 0);
-            GV.SetValue("_surfaceAcceleration", 12f);
+            GV.SetValue("_surfaceAcceleration", surfaceAccel);
             GV.SetValue("_inheritable", false);
             GV.SetValue("_isPlanetGravityVolume", true);
             GV.SetValue("_cutoffRadius", 55f);

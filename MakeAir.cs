@@ -1,8 +1,4 @@
 ﻿using OWML.ModHelper.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace MysteryPlanet
@@ -32,6 +28,27 @@ namespace MysteryPlanet
             vref.SetValue("_rainDirection", VisorRainEffectVolume.RainDirection.Radial);
             vref.SetValue("_layer", 0);
             vref.SetValue("_priority", 0);
+
+            AudioSource auds = air.AddComponent<AudioSource>();
+            auds.mute = false;
+            auds.bypassEffects = false;
+            auds.bypassListenerEffects = false;
+            auds.bypassReverbZones = false;
+            auds.playOnAwake = false;
+            auds.loop = true;
+            auds.priority = 128;
+            auds.volume = 0.35f;
+            auds.pitch = 1f;
+            auds.panStereo = 0f;
+            auds.spatialBlend = 0f;
+            auds.reverbZoneMix = 1f;
+
+            OWAudioSource owas = air.AddComponent<OWAudioSource>();
+            owas.SetAudioLibraryClip(AudioType.GD_RainAmbient_LP);
+            owas.SetClipSelectionType(OWAudioSource.ClipSelectionOnPlay.RANDOM);
+            owas.SetTrack(OWAudioMixer.TrackName.Environment);
+
+            AudioVolume av = air.AddComponent<AudioVolume>();
 
             air.SetActive(true);
         }

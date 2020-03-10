@@ -70,6 +70,10 @@
     <Reference Include="UnityEngine">
       <HintPath>E:\Epic\Epic Games\OuterWilds\OuterWilds_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.AudioModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>E:\Epic\Epic Games\OuterWilds\OuterWilds_Data\Managed\UnityEngine.AudioModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>E:\Epic\Epic Games\OuterWilds\OuterWilds_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
@@ -81,7 +85,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="MakeAir.cs" />
+    <Compile Include="MakeClouds.cs" />
+    <Compile Include="MakeMapMarker.cs" />
+    <Compile Include="MakeOrbitingAstroObject.cs" />
+    <Compile Include="MakeRFVolume.cs" />
+    <Compile Include="MakeSunOverride.cs" />
+    <Compile Include="MakeWater.cs" />
+    <Compile Include="PlanetSetup.cs" />
+    <Compile Include="MakeFieldDetector.cs" />
+    <Compile Include="MakeGravityWell.cs" />
+    <Compile Include="MakeSector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
