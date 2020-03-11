@@ -27,12 +27,14 @@ namespace MysteryPlanet
             RT.SetValue("degreesPerSecond", 10);
             RT.SetValue("randomizeRotationRate", false);
 
+            /*
             SectorCullGroup scg = cloudsTop.AddComponent<SectorCullGroup>();
             scg.SetValue("_sector", MainClass.SECTOR);
             scg.SetValue("_occlusionCulling", true);
             scg.SetValue("_dynamicCullingBounds", false);
             scg.SetValue("_particleSystemSuspendMode", CullGroup.ParticleSystemSuspendMode.Pause);
             scg.SetValue("_waitForStreaming", false);
+            */
 
             GameObject cloudsBottom = new GameObject();
             cloudsBottom.SetActive(false);
@@ -48,7 +50,6 @@ namespace MysteryPlanet
 
             TessSphereSectorToggle TSST = cloudsBottom.AddComponent<TessSphereSectorToggle>();
             TSST.SetValue("_sector", MainClass.SECTOR);
-
 
             GameObject cloudsFluid = new GameObject();
             cloudsFluid.layer = 17;

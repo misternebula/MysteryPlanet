@@ -92,6 +92,7 @@
     <Compile Include="MakeRFVolume.cs" />
     <Compile Include="MakeSunOverride.cs" />
     <Compile Include="MakeWater.cs" />
+    <Compile Include="Patches.cs" />
     <Compile Include="PlanetSetup.cs" />
     <Compile Include="MakeFieldDetector.cs" />
     <Compile Include="MakeGravityWell.cs" />

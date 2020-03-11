@@ -24,6 +24,8 @@ namespace MysteryPlanet
 
             //GlobalMessenger.AddListener("WakeUp", OnWakeUp);
 
+            base.ModHelper.HarmonyHelper.AddPrefix<VisorEffectVolume>("OnEffectVolumeEnter", typeof(Patches), "VisorEffectVolumeEnterPre");
+            base.ModHelper.HarmonyHelper.AddPrefix<VisorEffectVolume>("OnEffectVolumeExit", typeof(Patches), " VisorEffectVolumeExitPre");
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
@@ -89,7 +91,7 @@ namespace MysteryPlanet
             SECTOR = MakeSector.Make(body);
             MakeClouds.Make(body);
             MakeAir.Make(body);
-            MakeWater.Make(body);
+            //MakeWater.Make(body);
             MakeSunOverride.Make(body);
 
             base.ModHelper.Console.WriteLine(": All components finalized. Returning object...");
