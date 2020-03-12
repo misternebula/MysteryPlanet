@@ -17,7 +17,7 @@ namespace MysteryPlanet
             sphereshape.SetLayer(Shape.Layer.Sector);
             sphereshape.layerMask = -1;
             sphereshape.pointChecksOnly = true;
-            sphereshape.radius = 400f;
+            sphereshape.radius = 700f;
             sphereshape.center = Vector3.zero;
 
             OWTriggerVolume trigVol = sectorBase.AddComponent<OWTriggerVolume>();

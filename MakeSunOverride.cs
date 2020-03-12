@@ -13,8 +13,8 @@ namespace MysteryPlanet
 
             GiantsDeepSunOverrideVolume vol = sunov.AddComponent<GiantsDeepSunOverrideVolume>();
             vol.SetValue("_sector", MainClass.SECTOR);
-            vol.SetValue("_cloudsOuterRadius", 400f);
-            vol.SetValue("_cloudsInnerRadius", 380f);
+            vol.SetValue("_cloudsOuterRadius", 600f);
+            vol.SetValue("_cloudsInnerRadius", 500f);
             vol.SetValue("_waterOuterRadius", 502.5f);
             vol.SetValue("_waterInnerRadius", 402.5f);
 

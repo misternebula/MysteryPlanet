@@ -24,8 +24,6 @@ namespace MysteryPlanet
 
             //GlobalMessenger.AddListener("WakeUp", OnWakeUp);
 
-            base.ModHelper.HarmonyHelper.AddPrefix<VisorEffectVolume>("OnEffectVolumeEnter", typeof(Patches), "VisorEffectVolumeEnterPre");
-            base.ModHelper.HarmonyHelper.AddPrefix<VisorEffectVolume>("OnEffectVolumeExit", typeof(Patches), " VisorEffectVolumeExitPre");
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
@@ -80,10 +78,11 @@ namespace MysteryPlanet
         {
             GameObject body;
 
-            body = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            body.transform.localScale = new Vector3(500, 500, 500);
+            body = new GameObject();
             body.name = "invisibleplanet_body";
             body.SetActive(false);
+
+            MakeGeometry.Make(body);
 
             MakeOrbitingAstroObject.Make(body, 0.02f, 12f);
             MakeRFVolume.Make(body);
@@ -91,8 +90,10 @@ namespace MysteryPlanet
             SECTOR = MakeSector.Make(body);
             MakeClouds.Make(body);
             MakeAir.Make(body);
-            //MakeWater.Make(body);
+            MakeWater.Make(body);
             MakeSunOverride.Make(body);
+            MakeBaseEffects.Make(body);
+            MakeVolumes.Make(body);
 
             base.ModHelper.Console.WriteLine(": All components finalized. Returning object...");
 

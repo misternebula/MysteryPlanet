@@ -80,19 +80,25 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>E:\Epic\Epic Games\OuterWilds\OuterWilds_Data\Managed\UnityEngine.Networking.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.ParticleSystemModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>E:\Epic\Epic Games\OuterWilds\OuterWilds_Data\Managed\UnityEngine.ParticleSystemModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
       <HintPath>E:\Epic\Epic Games\OuterWilds\OuterWilds_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MakeAir.cs" />
+    <Compile Include="MakeBaseEffects.cs" />
     <Compile Include="MakeClouds.cs" />
+    <Compile Include="MakeGeometry.cs" />
     <Compile Include="MakeMapMarker.cs" />
     <Compile Include="MakeOrbitingAstroObject.cs" />
     <Compile Include="MakeRFVolume.cs" />
     <Compile Include="MakeSunOverride.cs" />
+    <Compile Include="MakeVolumes.cs" />
     <Compile Include="MakeWater.cs" />
-    <Compile Include="Patches.cs" />
     <Compile Include="PlanetSetup.cs" />
     <Compile Include="MakeFieldDetector.cs" />
     <Compile Include="MakeGravityWell.cs" />
