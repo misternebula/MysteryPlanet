@@ -5,7 +5,7 @@ namespace MysteryPlanet
 {
     static class MakeClouds
     {
-        public static void Make(GameObject body)
+        public static void Make(GameObject body, float topCloudScale, float bottomCloudScale)
         {
             GameObject cloudsMain = new GameObject();
             cloudsMain.SetActive(false);
@@ -14,7 +14,7 @@ namespace MysteryPlanet
             GameObject cloudsTop = new GameObject();
             cloudsTop.SetActive(false);
             cloudsTop.transform.parent = cloudsMain.transform;
-            cloudsTop.transform.localScale = new Vector3(450, 450, 450);
+            cloudsTop.transform.localScale = new Vector3(topCloudScale, topCloudScale, topCloudScale);
 
             MeshFilter MF = cloudsTop.AddComponent<MeshFilter>();
             MF.mesh = GameObject.Find("CloudsTopLayer_GD").GetComponent<MeshFilter>().mesh;
@@ -39,7 +39,7 @@ namespace MysteryPlanet
             GameObject cloudsBottom = new GameObject();
             cloudsBottom.SetActive(false);
             cloudsBottom.transform.parent = cloudsMain.transform;
-            cloudsBottom.transform.localScale = new Vector3(350,350,350);
+            cloudsBottom.transform.localScale = new Vector3(bottomCloudScale, bottomCloudScale, bottomCloudScale);
 
             TessellatedSphereRenderer TSR = cloudsBottom.AddComponent<TessellatedSphereRenderer>();
             TSR.tessellationMeshGroup = GameObject.Find("CloudsBottomLayer_GD").GetComponent<TessellatedSphereRenderer>().tessellationMeshGroup;
@@ -58,10 +58,10 @@ namespace MysteryPlanet
 
             SphereCollider cloudSC = cloudsFluid.AddComponent<SphereCollider>();
             cloudSC.isTrigger = true;
-            cloudSC.radius = 400f;
+            cloudSC.radius = topCloudScale;
 
             OWShellCollider cloudShell = cloudsFluid.AddComponent<OWShellCollider>();
-            cloudShell.SetValue("_innerRadius", 380f);
+            cloudShell.SetValue("_innerRadius", bottomCloudScale);
 
             CloudLayerFluidVolume cloudLayer = cloudsFluid.AddComponent<CloudLayerFluidVolume>();
             cloudLayer.SetValue("_layer", 5);

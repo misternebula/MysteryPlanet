@@ -6,7 +6,7 @@ namespace MysteryPlanet
 {
     static class MakeSector
     {
-        public static Sector Make(GameObject body)
+        public static Sector Make(GameObject body, float sectorSize)
         {
             GameObject sectorBase = new GameObject();
             sectorBase.SetActive(false);

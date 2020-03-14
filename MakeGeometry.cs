@@ -8,10 +8,10 @@ namespace MysteryPlanet
 {
     static class MakeGeometry
     {
-        public static void Make(GameObject body)
+        public static void Make(GameObject body, float groundScale)
         {
             GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            sphere.transform.localScale = new Vector3(100f, 500f, 500f);
+            sphere.transform.localScale = new Vector3(groundScale, groundScale, groundScale);
             sphere.transform.parent = body.transform;
         }
     }

@@ -5,7 +5,7 @@ namespace MysteryPlanet
 {
     static class MakeAir
     {
-        public static void Make(GameObject body)
+        public static void Make(GameObject body, float airScale)
         {
             GameObject air = new GameObject();
             air.layer = 17;
@@ -14,7 +14,7 @@ namespace MysteryPlanet
 
             SphereCollider atmoSC = air.AddComponent<SphereCollider>();
             atmoSC.isTrigger = true;
-            atmoSC.radius = 400f;
+            atmoSC.radius = airScale;
 
             SimpleFluidVolume sfv = air.AddComponent<SimpleFluidVolume>();
             sfv.SetValue("_layer", 5);

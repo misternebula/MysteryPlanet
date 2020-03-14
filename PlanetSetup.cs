@@ -76,24 +76,29 @@ namespace MysteryPlanet
 
         private GameObject GenerateBody()
         {
+            float groundScale = 500f;
+            float waterScale = 505f;
+            float topCloudScale = 600f;
+            float bottomCloudScale = 550f;
+
             GameObject body;
 
             body = new GameObject();
             body.name = "invisibleplanet_body";
             body.SetActive(false);
 
-            MakeGeometry.Make(body);
+            MakeGeometry.Make(body, groundScale);
 
-            MakeOrbitingAstroObject.Make(body, 0.02f, 12f);
+            MakeOrbitingAstroObject.Make(body, 0.02f, 12f, groundScale);
             MakeRFVolume.Make(body);
             MakeMapMarker.Make(body);
-            SECTOR = MakeSector.Make(body);
-            MakeClouds.Make(body);
-            MakeAir.Make(body);
-            MakeWater.Make(body);
-            MakeSunOverride.Make(body);
+            SECTOR = MakeSector.Make(body, topCloudScale);
+            MakeClouds.Make(body, topCloudScale, bottomCloudScale);
+            MakeAir.Make(body, topCloudScale);
+            MakeWater.Make(body, waterScale);
+            MakeSunOverride.Make(body, topCloudScale, bottomCloudScale, waterScale);
             MakeBaseEffects.Make(body);
-            MakeVolumes.Make(body);
+            MakeVolumes.Make(body, groundScale, topCloudScale);
 
             base.ModHelper.Console.WriteLine(": All components finalized. Returning object...");
 

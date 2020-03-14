@@ -9,7 +9,7 @@ namespace MysteryPlanet
 {
     static class MakeVolumes
     {
-        public static void Make(GameObject body)
+        public static void Make(GameObject body, float groundSize, float topCloudSize)
         {
             GameObject volumes = new GameObject();
             volumes.SetActive(false);
@@ -23,13 +23,13 @@ namespace MysteryPlanet
             ss.SetLayer(Shape.Layer.Sector);
             ss.layerMask = -1;
             ss.pointChecksOnly = true;
-            ss.radius = 600f;
+            ss.radius = topCloudSize;
 
             OWTriggerVolume trigvol = ruleset.AddComponent<OWTriggerVolume>();
 
             PlanetoidRuleset prule = ruleset.AddComponent<PlanetoidRuleset>();
-            prule.SetValue("_altitudeFloor", 500f);
-            prule.SetValue("_altitudeCeiling", 600f);
+            prule.SetValue("_altitudeFloor", groundSize);
+            prule.SetValue("_altitudeCeiling", topCloudSize);
 
             EffectRuleset er = ruleset.AddComponent<EffectRuleset>();
             er.SetValue("_type", EffectRuleset.BubbleType.Underwater);

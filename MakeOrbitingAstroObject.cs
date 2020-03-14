@@ -5,7 +5,7 @@ namespace MysteryPlanet
 {
     static class MakeOrbitingAstroObject
     {
-        public static void Make(GameObject body, float angularSpeed, float surfaceAccel)
+        public static void Make(GameObject body, float angularSpeed, float surfaceAccel, float groundSize)
         {
             Rigidbody RB = body.AddComponent<Rigidbody>();
             RB.mass = 10000;
@@ -32,7 +32,7 @@ namespace MysteryPlanet
 
             MakeFieldDetector.Make(body);
 
-            GravityVolume GV = MakeGravityWell.Make(body, surfaceAccel);
+            GravityVolume GV = MakeGravityWell.Make(body, surfaceAccel, groundSize, groundSize);
 
             AstroObject AO = body.AddComponent<AstroObject>();
             AO.SetValue("_type", AstroObject.Type.Planet);

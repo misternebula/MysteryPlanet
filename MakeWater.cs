@@ -5,13 +5,13 @@ namespace MysteryPlanet
 {
     static class MakeWater
     {
-        public static void Make(GameObject body)
+        public static void Make(GameObject body, float waterScale)
         {
             GameObject waterBase = new GameObject();
             waterBase.SetActive(false);
             waterBase.layer = 15;
             waterBase.transform.parent = body.transform;
-            waterBase.transform.localScale = new Vector3(1.005f, 1.005f, 1.005f);
+            waterBase.transform.localScale = new Vector3(waterScale, waterScale, waterScale);
             waterBase.DestroyAllComponents<SphereCollider>();
 
             TessellatedSphereRenderer tsr = waterBase.AddComponent<TessellatedSphereRenderer>();
