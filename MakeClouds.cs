@@ -14,7 +14,7 @@ namespace MysteryPlanet
             GameObject cloudsTop = new GameObject();
             cloudsTop.SetActive(false);
             cloudsTop.transform.parent = cloudsMain.transform;
-            cloudsTop.transform.localScale = new Vector3(topCloudScale, topCloudScale, topCloudScale);
+            cloudsTop.transform.localScale = new Vector3(topCloudScale/2, topCloudScale/2, topCloudScale/2);
 
             MeshFilter MF = cloudsTop.AddComponent<MeshFilter>();
             MF.mesh = GameObject.Find("CloudsTopLayer_GD").GetComponent<MeshFilter>().mesh;
@@ -39,7 +39,7 @@ namespace MysteryPlanet
             GameObject cloudsBottom = new GameObject();
             cloudsBottom.SetActive(false);
             cloudsBottom.transform.parent = cloudsMain.transform;
-            cloudsBottom.transform.localScale = new Vector3(bottomCloudScale, bottomCloudScale, bottomCloudScale);
+            cloudsBottom.transform.localScale = new Vector3(bottomCloudScale/2, bottomCloudScale/2, bottomCloudScale/2);
 
             TessellatedSphereRenderer TSR = cloudsBottom.AddComponent<TessellatedSphereRenderer>();
             TSR.tessellationMeshGroup = GameObject.Find("CloudsBottomLayer_GD").GetComponent<TessellatedSphereRenderer>().tessellationMeshGroup;

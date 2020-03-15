@@ -90,6 +90,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MakeAir.cs" />
+    <Compile Include="MakeAmbientLight.cs" />
+    <Compile Include="MakeAtmosphere.cs" />
     <Compile Include="MakeBaseEffects.cs" />
     <Compile Include="MakeClouds.cs" />
     <Compile Include="MakeGeometry.cs" />

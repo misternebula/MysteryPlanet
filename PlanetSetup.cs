@@ -14,6 +14,8 @@ namespace MysteryPlanet
         public static OWRigidbody OWRB;
         public static Sector SECTOR;
 
+        public static AssetBundle assetBundle;
+
         private void Start()
         {
             base.ModHelper.Console.WriteLine("[InvisiblePlanet] :");
@@ -25,6 +27,9 @@ namespace MysteryPlanet
             //GlobalMessenger.AddListener("WakeUp", OnWakeUp);
 
             SceneManager.sceneLoaded += OnSceneLoaded;
+
+            assetBundle = ModHelper.Assets.LoadBundle("fogsphere");
+            
         }
 
         void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -77,9 +82,9 @@ namespace MysteryPlanet
         private GameObject GenerateBody()
         {
             float groundScale = 500f;
-            float waterScale = 505f;
-            float topCloudScale = 600f;
-            float bottomCloudScale = 550f;
+            float waterScale = 501f;
+            float topCloudScale = 650f;
+            float bottomCloudScale = 600f;
 
             GameObject body;
 
@@ -94,11 +99,13 @@ namespace MysteryPlanet
             MakeMapMarker.Make(body);
             SECTOR = MakeSector.Make(body, topCloudScale);
             MakeClouds.Make(body, topCloudScale, bottomCloudScale);
-            MakeAir.Make(body, topCloudScale);
+            MakeAir.Make(body, topCloudScale/2);
             MakeWater.Make(body, waterScale);
             MakeSunOverride.Make(body, topCloudScale, bottomCloudScale, waterScale);
             MakeBaseEffects.Make(body);
             MakeVolumes.Make(body, groundScale, topCloudScale);
+            MakeAmbientLight.Make(body);
+            MakeAtmosphere.Make(body);
 
             base.ModHelper.Console.WriteLine(": All components finalized. Returning object...");
 
