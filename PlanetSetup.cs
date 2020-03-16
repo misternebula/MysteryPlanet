@@ -16,10 +16,13 @@ namespace MysteryPlanet
 
         public static AssetBundle assetBundle;
 
+        public static Mesh planetMesh;
+
+        public static int componentCount;
+        public static int returnedCount;
+
         private void Start()
         {
-            base.ModHelper.Console.WriteLine("[InvisiblePlanet] :");
-
             base.ModHelper.Events.Subscribe<Flashlight>(Events.AfterStart);
             IModEvents events = base.ModHelper.Events;
             events.OnEvent = (Action<MonoBehaviour, Events>)Delegate.Combine(events.OnEvent, new Action<MonoBehaviour, Events>(this.OnEvent));
@@ -28,15 +31,25 @@ namespace MysteryPlanet
 
             SceneManager.sceneLoaded += OnSceneLoaded;
 
-            assetBundle = ModHelper.Assets.LoadBundle("fogsphere");
-            
+            assetBundle = base.ModHelper.Assets.LoadBundle("fogsphere");
+            if (assetBundle != null)
+            {
+                base.ModHelper.Console.WriteLine(":     AssetBundle loaded successfully!");
+            }
+            //var planetMesh = ModHelper.Assets.LoadMesh("Icosphere.asset");
+            //planetMesh.OnLoaded += OnPlanetMeshLoaded;
         }
+
+        /*
+        void OnPlanetMeshLoaded(MeshFilter mesh)
+        {
+            planetMesh = mesh.mesh;
+        }
+        */
 
         void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             SceneIntegrator.isDLCEnabled = true;
-
-            base.ModHelper.Console.WriteLine("Setup finished!");
         }
 
         private void OnEvent(MonoBehaviour behaviour, Events ev)
@@ -44,11 +57,8 @@ namespace MysteryPlanet
             bool flag = behaviour.GetType() == typeof(Flashlight) && ev == Events.AfterStart;
             if (flag)
             {
-                base.ModHelper.Console.WriteLine(": Started!");
-
                 foreach (var item in GameObject.FindObjectsOfType<ProbeCamera>())
                 {
-                    base.ModHelper.Console.WriteLine(item.gameObject.name);
                     RenderTexture temp = new RenderTexture(512, 512, 16);
                     temp.Create();
                     item.SetValue("_longExposureSnapshotTexture", temp);
@@ -86,13 +96,15 @@ namespace MysteryPlanet
             float topCloudScale = 650f;
             float bottomCloudScale = 600f;
 
+            componentCount = 16; // How many components are in the project.
+
             GameObject body;
 
             body = new GameObject();
             body.name = "invisibleplanet_body";
             body.SetActive(false);
-
-            MakeGeometry.Make(body, groundScale);
+            
+            //MakeGeometry.Make(body, groundScale, planetMesh);
 
             MakeOrbitingAstroObject.Make(body, 0.02f, 12f, groundScale);
             MakeRFVolume.Make(body);
@@ -106,8 +118,12 @@ namespace MysteryPlanet
             MakeVolumes.Make(body, groundScale, topCloudScale);
             MakeAmbientLight.Make(body);
             MakeAtmosphere.Make(body);
+            MakeInvisible.Make(body);
 
-            base.ModHelper.Console.WriteLine(": All components finalized. Returning object...");
+            if (returnedCount != componentCount)
+            {
+                base.ModHelper.Console.WriteLine("ERROR! Expected [" + componentCount + "] components but only [" + returnedCount + "] were activated.");
+            }
 
             return body;
         }

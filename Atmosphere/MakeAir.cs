@@ -51,6 +51,8 @@ namespace MysteryPlanet
             AudioVolume av = air.AddComponent<AudioVolume>();
 
             air.SetActive(true);
+
+            MainClass.returnedCount++;
         }
     }
 }

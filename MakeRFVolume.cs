@@ -34,6 +34,7 @@ namespace MysteryPlanet
             RF_RFV.SetValue("_isPrimaryVolume", true);
             RF_RFV.SetValue("_isCloseRangeVolume", false);
             RFVolume.SetActive(true);
+            MainClass.returnedCount++;
         }
     }
 }

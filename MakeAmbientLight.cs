@@ -24,7 +24,7 @@ namespace MysteryPlanet
             SectorLightsCullGroup cg = light.AddComponent<SectorLightsCullGroup>();
             cg.SetSector(MainClass.SECTOR);
             light.SetActive(true);
-
+            MainClass.returnedCount++;
         }
     }
 }

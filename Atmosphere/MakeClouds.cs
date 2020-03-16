@@ -74,6 +74,8 @@ namespace MysteryPlanet
             cloudsTop.SetActive(true);
             cloudsBottom.SetActive(true);
             cloudsMain.SetActive(true);
+
+            MainClass.returnedCount++;
         }
     }
 }

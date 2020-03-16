@@ -51,6 +51,7 @@ namespace MysteryPlanet
             fog3.GetComponent<MeshRenderer>().material.color = new Color32(0, 75, 50, 5);
 
             waterBase.SetActive(true);
+            MainClass.returnedCount++;
         }
     }
 }

@@ -45,6 +45,8 @@ namespace MysteryPlanet
             rain.GetComponent<Renderer>().material = GameObject.Find("Effects_GD_Rain").GetComponent<Renderer>().material;
 
             main.SetActive(true);
+
+            MainClass.returnedCount++;
         }
     }
 }

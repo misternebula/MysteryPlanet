@@ -89,22 +89,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MakeAir.cs" />
+    <Compile Include="Invisible Mechanics\MakeInvisible.cs" />
+    <Compile Include="Atmosphere\MakeAir.cs" />
     <Compile Include="MakeAmbientLight.cs" />
-    <Compile Include="MakeAtmosphere.cs" />
-    <Compile Include="MakeBaseEffects.cs" />
-    <Compile Include="MakeClouds.cs" />
-    <Compile Include="MakeGeometry.cs" />
+    <Compile Include="Atmosphere\MakeAtmosphere.cs" />
+    <Compile Include="Atmosphere\MakeBaseEffects.cs" />
+    <Compile Include="Atmosphere\MakeClouds.cs" />
+    <Compile Include="Invisible Mechanics\MysteryPlanetCloakSphere.cs" />
+    <Compile Include="Planet Body\MakeGeometry.cs" />
     <Compile Include="MakeMapMarker.cs" />
     <Compile Include="MakeOrbitingAstroObject.cs" />
     <Compile Include="MakeRFVolume.cs" />
-    <Compile Include="MakeSunOverride.cs" />
-    <Compile Include="MakeVolumes.cs" />
-    <Compile Include="MakeWater.cs" />
+    <Compile Include="Atmosphere\MakeSunOverride.cs" />
+    <Compile Include="Atmosphere\MakeVolumes.cs" />
+    <Compile Include="Planet Body\MakeWater.cs" />
     <Compile Include="PlanetSetup.cs" />
     <Compile Include="MakeFieldDetector.cs" />
     <Compile Include="MakeGravityWell.cs" />
-    <Compile Include="MakeSector.cs" />
+    <Compile Include="Planet Body\MakeSector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -39,6 +39,7 @@ namespace MysteryPlanet
             AO.SetValue("_name", AstroObject.Name.InvisiblePlanet);
             AO.SetPrimaryBody(Locator.GetAstroObject(AstroObject.Name.Sun));
             AO.SetValue("_gravityVolume", GV);
+            MainClass.returnedCount++;
         }
     }
 }

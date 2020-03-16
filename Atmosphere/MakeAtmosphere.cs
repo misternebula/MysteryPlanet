@@ -29,6 +29,8 @@ namespace MysteryPlanet
             pfc.fogColorRampTexture = GameObject.Find("Atmosphere_GD/FogSphere").GetComponent<PlanetaryFogController>().fogColorRampTexture;
             pfc.fogColorRampIntensity = 1f;
             pfc.fogTint = Color.white;
+
+            MainClass.returnedCount++;
         }
     }
 }

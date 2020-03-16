@@ -35,7 +35,7 @@ namespace MysteryPlanet
             OWCollider GV_OWC = GravityWell.AddComponent<OWCollider>();
             GV_OWC.SetLODActivationMask(DynamicOccupant.Player);
             GravityWell.SetActive(true);
-
+            MainClass.returnedCount++;
             return GV;
         }
     }
