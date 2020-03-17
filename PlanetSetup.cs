@@ -77,8 +77,6 @@ namespace MysteryPlanet
         {
             if (Input.GetKeyDown(KeyCode.Keypad0))
             {
-                _invisiblePlanet.layer = 28;
-
                 foreach (var item in GameObject.FindObjectsOfType<ProbeCamera>())
                 {
                     RenderTexture temp = new RenderTexture(512, 512, 16);
@@ -91,8 +89,8 @@ namespace MysteryPlanet
 
         private GameObject GenerateBody()
         {
-            float groundScale = 500f;
-            float waterScale = 501f;
+            float groundScale = 400f;
+            float waterScale = 401f;
             float topCloudScale = 650f;
             float bottomCloudScale = 600f;
 
@@ -104,7 +102,7 @@ namespace MysteryPlanet
             body.name = "invisibleplanet_body";
             body.SetActive(false);
             
-            //MakeGeometry.Make(body, groundScale, planetMesh);
+            MakeGeometry.Make(body, groundScale, planetMesh);
 
             MakeOrbitingAstroObject.Make(body, 0.02f, 12f, groundScale);
             MakeRFVolume.Make(body);
@@ -118,7 +116,7 @@ namespace MysteryPlanet
             MakeVolumes.Make(body, groundScale, topCloudScale);
             MakeAmbientLight.Make(body);
             MakeAtmosphere.Make(body);
-            MakeInvisible.Make(body);
+            MakeInvisible.Make(body, 660f);
 
             if (returnedCount != componentCount)
             {
