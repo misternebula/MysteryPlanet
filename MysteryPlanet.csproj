@@ -91,21 +91,21 @@
   <ItemGroup>
     <Compile Include="Invisible Mechanics\MakeInvisible.cs" />
     <Compile Include="Atmosphere\MakeAir.cs" />
-    <Compile Include="MakeAmbientLight.cs" />
+    <Compile Include="General\MakeAmbientLight.cs" />
     <Compile Include="Atmosphere\MakeAtmosphere.cs" />
     <Compile Include="Atmosphere\MakeBaseEffects.cs" />
     <Compile Include="Atmosphere\MakeClouds.cs" />
     <Compile Include="Invisible Mechanics\MysteryPlanetCloakSphere.cs" />
     <Compile Include="Planet Body\MakeGeometry.cs" />
-    <Compile Include="MakeMapMarker.cs" />
-    <Compile Include="MakeOrbitingAstroObject.cs" />
-    <Compile Include="MakeRFVolume.cs" />
+    <Compile Include="General\MakeMapMarker.cs" />
+    <Compile Include="General\MakeOrbitingAstroObject.cs" />
+    <Compile Include="General\MakeRFVolume.cs" />
     <Compile Include="Atmosphere\MakeSunOverride.cs" />
     <Compile Include="Atmosphere\MakeVolumes.cs" />
     <Compile Include="Planet Body\MakeWater.cs" />
     <Compile Include="PlanetSetup.cs" />
-    <Compile Include="MakeFieldDetector.cs" />
-    <Compile Include="MakeGravityWell.cs" />
+    <Compile Include="General\MakeFieldDetector.cs" />
+    <Compile Include="General\MakeGravityWell.cs" />
     <Compile Include="Planet Body\MakeSector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

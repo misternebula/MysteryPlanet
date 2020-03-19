@@ -115,8 +115,8 @@ namespace MysteryPlanet
             MakeBaseEffects.Make(body);
             MakeVolumes.Make(body, groundScale, topCloudScale);
             MakeAmbientLight.Make(body);
-            MakeAtmosphere.Make(body);
-            MakeInvisible.Make(body, 660f);
+            MakeAtmosphere.Make(body, topCloudScale);
+            MakeInvisible.Make(body, topCloudScale + 10f);
 
             if (returnedCount != componentCount)
             {

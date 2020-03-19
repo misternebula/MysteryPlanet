@@ -28,6 +28,7 @@ namespace MysteryPlanet
             effectC.SetValue("_sector", MainClass.SECTOR);
             effectC.SetValue("_ocean", tsr);
 
+            // Because assetbundles were a bitch...
 
             GameObject fog1 = new GameObject();
             fog1.transform.parent = waterBase.transform;

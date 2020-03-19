@@ -58,7 +58,7 @@ namespace MysteryPlanet
 
             SphereCollider cloudSC = cloudsFluid.AddComponent<SphereCollider>();
             cloudSC.isTrigger = true;
-            cloudSC.radius = topCloudScale;
+            cloudSC.radius = topCloudScale/2;
 
             OWShellCollider cloudShell = cloudsFluid.AddComponent<OWShellCollider>();
             cloudShell.SetValue("_innerRadius", bottomCloudScale);
@@ -73,6 +73,7 @@ namespace MysteryPlanet
 
             cloudsTop.SetActive(true);
             cloudsBottom.SetActive(true);
+            cloudsFluid.SetActive(true);
             cloudsMain.SetActive(true);
 
             MainClass.returnedCount++;
