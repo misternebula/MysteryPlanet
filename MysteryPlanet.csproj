@@ -96,6 +96,7 @@
     <Compile Include="Atmosphere\MakeBaseEffects.cs" />
     <Compile Include="Atmosphere\MakeClouds.cs" />
     <Compile Include="Invisible Mechanics\MysteryPlanetCloakSphere.cs" />
+    <Compile Include="Patches.cs" />
     <Compile Include="Planet Body\MakeGeometry.cs" />
     <Compile Include="General\MakeMapMarker.cs" />
     <Compile Include="General\MakeOrbitingAstroObject.cs" />

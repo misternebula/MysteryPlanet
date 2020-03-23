@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MysteryPlanet
 {
-    class Patches
+    static class Patches
     {
     }
 }
