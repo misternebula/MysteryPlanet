@@ -44,6 +44,13 @@ namespace MysteryPlanet
             TessellatedSphereRenderer TSR = cloudsBottom.AddComponent<TessellatedSphereRenderer>();
             TSR.tessellationMeshGroup = GameObject.Find("CloudsBottomLayer_GD").GetComponent<TessellatedSphereRenderer>().tessellationMeshGroup;
             TSR.sharedMaterials = GameObject.Find("CloudsBottomLayer_GD").GetComponent<TessellatedSphereRenderer>().sharedMaterials;
+
+            foreach (var item in TSR.sharedMaterials)
+            {
+                Debug.LogError(item.GetColor("_Color"));
+                item.SetColor("_Color", Color.red);
+            }
+
             TSR.maxLOD = 6;
             TSR.LODBias = 0;
             TSR.LODRadius = 1f;

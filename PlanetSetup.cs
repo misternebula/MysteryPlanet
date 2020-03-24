@@ -15,8 +15,7 @@ namespace MysteryPlanet
         public static Sector SECTOR;
 
         public static AssetBundle assetBundle;
-
-        public static Mesh planetMesh;
+        public static Mesh planetmesh;
 
         public static int componentCount;
         public static int returnedCount;
@@ -31,21 +30,16 @@ namespace MysteryPlanet
 
             SceneManager.sceneLoaded += OnSceneLoaded;
 
-            assetBundle = base.ModHelper.Assets.LoadBundle("fogsphere");
-            if (assetBundle != null)
-            {
-                base.ModHelper.Console.WriteLine(":     AssetBundle loaded successfully!");
-            }
-            //var planetMesh = ModHelper.Assets.LoadMesh("Icosphere.asset");
-            //planetMesh.OnLoaded += OnPlanetMeshLoaded;
+            assetBundle = ModHelper.Assets.LoadBundle("fogsphere");
+
+            var planetmesh = ModHelper.Assets.LoadMesh("body.asset");
+            planetmesh.OnLoaded += OnPlanetMeshLoaded;
         }
 
-        /*
         void OnPlanetMeshLoaded(MeshFilter mesh)
         {
-            planetMesh = mesh.mesh;
+            planetmesh = mesh.mesh;
         }
-        */
 
         void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
@@ -102,7 +96,7 @@ namespace MysteryPlanet
             body.name = "invisibleplanet_body";
             body.SetActive(false);
             
-            MakeGeometry.Make(body, groundScale, planetMesh);
+            MakeGeometry.Make(body, groundScale, assetBundle, planetmesh);
 
             MakeOrbitingAstroObject.Make(body, 0.02f, 12f, groundScale);
             MakeRFVolume.Make(body);
@@ -115,7 +109,7 @@ namespace MysteryPlanet
             MakeBaseEffects.Make(body);
             MakeVolumes.Make(body, groundScale, topCloudScale);
             MakeAmbientLight.Make(body);
-            MakeAtmosphere.Make(body, topCloudScale);
+            MakeAtmosphere.Make(body, topCloudScale, 0.75f, new Color32(0, 75, 15, 128));
             MakeInvisible.Make(body, topCloudScale + 10f);
 
             if (returnedCount != componentCount)

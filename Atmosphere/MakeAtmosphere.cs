@@ -8,7 +8,7 @@ namespace MysteryPlanet
 {
     static class MakeAtmosphere
     {
-        public static void Make(GameObject body, float topCloudScale)
+        public static void Make(GameObject body, float topCloudScale, float fogDensity, Color fogTint)
         {
             topCloudScale /= 2;
 
@@ -33,15 +33,17 @@ namespace MysteryPlanet
             PlanetaryFogController pfc = fog.AddComponent<PlanetaryFogController>();
             pfc.fogLookupTexture = GameObject.Find("Atmosphere_GD/FogSphere").GetComponent<PlanetaryFogController>().fogLookupTexture;
             pfc.fogRadius = topCloudScale + 10;
-            pfc.fogDensity = 0.3f;
+            pfc.fogDensity = fogDensity;
             pfc.fogExponent = 1f;
             pfc.fogColorRampTexture = GameObject.Find("Atmosphere_GD/FogSphere").GetComponent<PlanetaryFogController>().fogColorRampTexture;
             pfc.fogColorRampIntensity = 1f;
-            pfc.fogTint = Color.white;
+            pfc.fogTint = fogTint;
 
+            /*
             GameObject atmo = new GameObject();
             atmo.SetActive(false);
             atmo.transform.parent = atmoM.transform;
+            atmo.transform.localScale = new Vector3(topCloudScale + 100, topCloudScale + 100, topCloudScale + 100);
 
             Material mat = GameObject.Find("Atmosphere_LOD0").GetComponent<MeshRenderer>().material;
 
@@ -93,9 +95,11 @@ namespace MysteryPlanet
 
             lodg.SetLODs(lodlist);
             lodg.fadeMode = LODFadeMode.None;
+            */
 
             fog.SetActive(true);
-            atmo.SetActive(true);
+            //atmo.SetActive(true);
+            atmoM.SetActive(true);
 
             MainClass.returnedCount++;
         }
