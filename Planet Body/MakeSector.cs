@@ -29,8 +29,6 @@ namespace MysteryPlanet
 
             sectorBase.SetActive(true);
 
-            MainClass.returnedCount++;
-
             return sector;
         }
     }

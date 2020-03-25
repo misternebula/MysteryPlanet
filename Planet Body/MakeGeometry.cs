@@ -9,25 +9,16 @@ namespace MysteryPlanet
 {
     static class MakeGeometry
     {
-        public static void Make(GameObject body, float groundScale, AssetBundle bundle, Mesh mesh)
+        public static void Make(GameObject body, float groundScale)
         {
-            foreach (var item in bundle.GetAllAssetNames())
-            {
-                Debug.LogError(item);
-            }
 
-            Debug.LogError(mesh.name);
-            Debug.LogError(mesh.bounds);
 
-            GameObject sphere = GameObject.Instantiate(bundle.LoadAsset<GameObject>("assets/planet.prefab"));
-
-            //GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             sphere.transform.parent = body.transform;
             sphere.transform.localScale = new Vector3(groundScale / 2, groundScale / 2, groundScale / 2);
+            sphere.GetComponent<MeshFilter>().mesh = GameObject.Find("CloudsTopLayer_GD").GetComponent<MeshFilter>().mesh;
+            sphere.GetComponent<SphereCollider>().radius = 1f;
             sphere.SetActive(true);
-            Debug.LogError(sphere.GetComponent<MeshFilter>().mesh.bounds);
-            //sphere.GetComponent<MeshFilter>().mesh = GameObject.Find("CloudsTopLayer_GD").GetComponent<MeshFilter>().mesh;
-            //sphere.GetComponent<SphereCollider>().radius = 1f;
 
             /*
             GameObject sphere = new GameObject();
@@ -64,7 +55,6 @@ namespace MysteryPlanet
             geo.SetActive(true);
             
             */
-            MainClass.returnedCount++;
         }
     }
 }

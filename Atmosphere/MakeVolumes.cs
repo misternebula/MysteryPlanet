@@ -37,8 +37,6 @@ namespace MysteryPlanet
             er.SetValue("_cloudMaterial", GameObject.Find("RulesetVolumes_GD").GetComponent<RulesetVolume>().GetValue<Material>("_cloudMaterial"));
 
             volumes.SetActive(true);
-
-            MainClass.returnedCount++;
         }
     }
 }

@@ -108,6 +108,7 @@
     <Compile Include="General\MakeFieldDetector.cs" />
     <Compile Include="General\MakeGravityWell.cs" />
     <Compile Include="Planet Body\MakeSector.cs" />
+    <Compile Include="PlanetStructure.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

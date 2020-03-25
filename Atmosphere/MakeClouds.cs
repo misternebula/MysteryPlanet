@@ -5,7 +5,7 @@ namespace MysteryPlanet
 {
     static class MakeClouds
     {
-        public static void Make(GameObject body, float topCloudScale, float bottomCloudScale)
+        public static void Make(GameObject body, float topCloudScale, float bottomCloudScale, Color? cloudTint = null)
         {
             GameObject cloudsMain = new GameObject();
             cloudsMain.SetActive(false);
@@ -47,8 +47,7 @@ namespace MysteryPlanet
 
             foreach (var item in TSR.sharedMaterials)
             {
-                Debug.LogError(item.GetColor("_Color"));
-                item.SetColor("_Color", Color.red);
+                item.SetColor("_Color", cloudTint.Value);
             }
 
             TSR.maxLOD = 6;
@@ -82,8 +81,6 @@ namespace MysteryPlanet
             cloudsBottom.SetActive(true);
             cloudsFluid.SetActive(true);
             cloudsMain.SetActive(true);
-
-            MainClass.returnedCount++;
         }
     }
 }

@@ -8,7 +8,7 @@ namespace MysteryPlanet
 {
     static class MakeAtmosphere
     {
-        public static void Make(GameObject body, float topCloudScale, float fogDensity, Color fogTint)
+        public static void Make(GameObject body, float topCloudScale, bool hasFog, float fogDensity, Color fogTint)
         {
             topCloudScale /= 2;
 
@@ -17,27 +17,32 @@ namespace MysteryPlanet
             atmoM.name = "Atmosphere";
             atmoM.transform.parent = body.transform;
 
-            GameObject fog = new GameObject();
-            fog.SetActive(false);
-            fog.name = "FogSphere";
-            fog.transform.parent = atmoM.transform;
-            fog.transform.localScale = new Vector3(topCloudScale + 10, topCloudScale + 10, topCloudScale + 10);
+            if (hasFog)
+            {
+                GameObject fog = new GameObject();
+                fog.SetActive(false);
+                fog.name = "FogSphere";
+                fog.transform.parent = atmoM.transform;
+                fog.transform.localScale = new Vector3(topCloudScale + 10, topCloudScale + 10, topCloudScale + 10);
 
-            MeshFilter mf = fog.AddComponent<MeshFilter>();
-            mf.mesh = GameObject.Find("Atmosphere_GD/FogSphere").GetComponent<MeshFilter>().mesh;
+                MeshFilter mf = fog.AddComponent<MeshFilter>();
+                mf.mesh = GameObject.Find("Atmosphere_GD/FogSphere").GetComponent<MeshFilter>().mesh;
 
-            MeshRenderer mr = fog.AddComponent<MeshRenderer>();
-            mr.materials = GameObject.Find("Atmosphere_GD/FogSphere").GetComponent<MeshRenderer>().materials;
-            mr.allowOcclusionWhenDynamic = true;
+                MeshRenderer mr = fog.AddComponent<MeshRenderer>();
+                mr.materials = GameObject.Find("Atmosphere_GD/FogSphere").GetComponent<MeshRenderer>().materials;
+                mr.allowOcclusionWhenDynamic = true;
 
-            PlanetaryFogController pfc = fog.AddComponent<PlanetaryFogController>();
-            pfc.fogLookupTexture = GameObject.Find("Atmosphere_GD/FogSphere").GetComponent<PlanetaryFogController>().fogLookupTexture;
-            pfc.fogRadius = topCloudScale + 10;
-            pfc.fogDensity = fogDensity;
-            pfc.fogExponent = 1f;
-            pfc.fogColorRampTexture = GameObject.Find("Atmosphere_GD/FogSphere").GetComponent<PlanetaryFogController>().fogColorRampTexture;
-            pfc.fogColorRampIntensity = 1f;
-            pfc.fogTint = fogTint;
+                PlanetaryFogController pfc = fog.AddComponent<PlanetaryFogController>();
+                pfc.fogLookupTexture = GameObject.Find("Atmosphere_GD/FogSphere").GetComponent<PlanetaryFogController>().fogLookupTexture;
+                pfc.fogRadius = topCloudScale + 10;
+                pfc.fogDensity = fogDensity;
+                pfc.fogExponent = 1f;
+                pfc.fogColorRampTexture = GameObject.Find("Atmosphere_GD/FogSphere").GetComponent<PlanetaryFogController>().fogColorRampTexture;
+                pfc.fogColorRampIntensity = 1f;
+                pfc.fogTint = fogTint;
+
+                fog.SetActive(true);
+            }
 
             /*
             GameObject atmo = new GameObject();
@@ -96,12 +101,9 @@ namespace MysteryPlanet
             lodg.SetLODs(lodlist);
             lodg.fadeMode = LODFadeMode.None;
             */
-
-            fog.SetActive(true);
+            
             //atmo.SetActive(true);
             atmoM.SetActive(true);
-
-            MainClass.returnedCount++;
         }
     }
 }

@@ -11,7 +11,6 @@ namespace MysteryPlanet
             var MM = body.AddComponent<MapMarker>();
             MM.SetValue("_labelID", UITextType.YouAreDeadMessage);
             MM.SetValue("_markerType", MM.GetType().GetNestedType("MarkerType", BindingFlags.NonPublic).GetField("Planet").GetValue(MM));
-            MainClass.returnedCount++;
         }
     }
 }

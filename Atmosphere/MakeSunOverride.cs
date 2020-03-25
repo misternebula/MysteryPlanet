@@ -19,8 +19,6 @@ namespace MysteryPlanet
             vol.SetValue("_waterInnerRadius", 402.5f);
 
             sunov.SetActive(true);
-
-            MainClass.returnedCount++;
         }
     }
 }

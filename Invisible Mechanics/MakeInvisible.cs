@@ -38,8 +38,6 @@ namespace MysteryPlanet
             RT.SetValue("randomizeRotationRate", false);
 
             cloudsTop.SetActive(true);
-
-            MainClass.returnedCount++;
         }
     }
 }

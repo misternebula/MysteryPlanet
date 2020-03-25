@@ -19,7 +19,6 @@ namespace MysteryPlanet
             CFD.SetValue("_detectableFields", temp);
             CFD.SetValue("_inheritElement0", false);
             FieldDetector.SetActive(true);
-            MainClass.returnedCount++;
         }
     }
 }

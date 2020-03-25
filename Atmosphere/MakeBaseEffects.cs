@@ -46,8 +46,6 @@ namespace MysteryPlanet
 
             main.SetActive(true);
             rain.SetActive(true);
-
-            MainClass.returnedCount++;
         }
     }
 }

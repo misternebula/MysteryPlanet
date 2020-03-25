@@ -5,7 +5,7 @@ namespace MysteryPlanet
 {
     static class MakeOrbitingAstroObject
     {
-        public static void Make(GameObject body, float angularSpeed, float surfaceAccel, float groundSize)
+        public static void Make(GameObject body, AstroObject primaryBody, float angularSpeed, float surfaceAccel, float groundSize)
         {
             Rigidbody RB = body.AddComponent<Rigidbody>();
             RB.mass = 10000;
@@ -23,7 +23,7 @@ namespace MysteryPlanet
             MainClass.OWRB.SetValue("_maintainOriginalCenterOfMass", true);
 
             InitialMotion IM = body.AddComponent<InitialMotion>();
-            IM.SetPrimaryBody(Locator.GetSunTransform().GetAttachedOWRigidbody());
+            IM.SetPrimaryBody(primaryBody.GetAttachedOWRigidbody());
             IM.SetValue("_orbitAngle", 0f);
             IM.SetValue("_isGlobalAxis", false);
             IM.SetValue("_initAngularSpeed", angularSpeed);
@@ -37,9 +37,8 @@ namespace MysteryPlanet
             AstroObject AO = body.AddComponent<AstroObject>();
             AO.SetValue("_type", AstroObject.Type.Planet);
             AO.SetValue("_name", AstroObject.Name.InvisiblePlanet);
-            AO.SetPrimaryBody(Locator.GetAstroObject(AstroObject.Name.Sun));
+            AO.SetPrimaryBody(primaryBody);
             AO.SetValue("_gravityVolume", GV);
-            MainClass.returnedCount++;
         }
     }
 }

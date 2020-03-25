@@ -16,7 +16,7 @@ namespace MysteryPlanet
             Light l = light.AddComponent<Light>();
             l.type = LightType.Point;
             l.range = 700f;
-            l.color = new Color32(0, 75, 50, 128);
+            l.color = Color.red;
             l.intensity = 0.8f;
             l.shadows = LightShadows.None;
             l.cookie = GameObject.Find("AmbientLight_GD").GetComponent<Light>().cookie;
@@ -25,8 +25,6 @@ namespace MysteryPlanet
             cg.SetSector(MainClass.SECTOR);
 
             light.SetActive(true);
-
-            MainClass.returnedCount++;
         }
     }
 }
