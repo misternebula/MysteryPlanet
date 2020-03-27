@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MysteryPlanet
+namespace MysteryPlanet.Body
 {
     static class MakeSector
     {

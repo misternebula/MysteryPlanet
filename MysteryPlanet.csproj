@@ -67,6 +67,9 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="UnityEditor">
+      <HintPath>..\..\..\..\..\Program Files\Unity\Hub\Editor\2017.3.0f3\Editor\Data\Managed\UnityEditor.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>E:\Epic\Epic Games\OuterWilds\OuterWilds_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
@@ -89,6 +92,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Debug\MakeTempSimButton.cs" />
+    <Compile Include="General\MakeSpawnPoint.cs" />
+    <Compile Include="Interaction\DebugButton.cs" />
     <Compile Include="Invisible Mechanics\MakeInvisible.cs" />
     <Compile Include="Atmosphere\MakeAir.cs" />
     <Compile Include="General\MakeAmbientLight.cs" />
@@ -110,6 +116,10 @@
     <Compile Include="Planet Body\MakeSector.cs" />
     <Compile Include="PlanetStructure.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Simulation\MakeSimulationBody.cs" />
+    <Compile Include="Simulation\SimulationController.cs" />
+    <Compile Include="UI\AddToUITable.cs" />
+    <Compile Include="Utility\ObjImporter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

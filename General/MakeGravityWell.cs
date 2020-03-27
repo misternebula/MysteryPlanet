@@ -2,7 +2,7 @@
 using System.Reflection;
 using UnityEngine;
 
-namespace MysteryPlanet
+namespace MysteryPlanet.General
 {
     static class MakeGravityWell
     {

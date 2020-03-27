@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using UnityEngine;
 
-namespace MysteryPlanet
+namespace MysteryPlanet.Atmosphere
 {
     static class MakeBaseEffects
     {

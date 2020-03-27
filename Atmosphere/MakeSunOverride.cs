@@ -1,7 +1,7 @@
 ﻿using OWML.ModHelper.Events;
 using UnityEngine;
 
-namespace MysteryPlanet
+namespace MysteryPlanet.Atmosphere
 {
     static class MakeSunOverride
     {

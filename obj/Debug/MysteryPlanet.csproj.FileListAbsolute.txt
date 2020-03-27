@@ -342,3 +342,14 @@ C:\Users\Henry\source\repos\MysteryPlanet\obj\Debug\MysteryPlanet.csprojAssembly
 C:\Users\Henry\source\repos\MysteryPlanet\obj\Debug\MysteryPlanet.csproj.CopyComplete
 C:\Users\Henry\source\repos\MysteryPlanet\obj\Debug\MysteryPlanet.dll
 C:\Users\Henry\source\repos\MysteryPlanet\obj\Debug\MysteryPlanet.pdb
+C:\Users\Henry\source\repos\MysteryPlanet\bin\Debug\UnityEditor.dll
+C:\Users\Henry\source\repos\MysteryPlanet\bin\Debug\Unity.Cecil.dll
+C:\Users\Henry\source\repos\MysteryPlanet\bin\Debug\Unity.SerializationLogic.dll
+C:\Users\Henry\source\repos\MysteryPlanet\bin\Debug\Unity.DataContract.dll
+C:\Users\Henry\source\repos\MysteryPlanet\bin\Debug\ExCSS.Unity.dll
+C:\Users\Henry\source\repos\MysteryPlanet\bin\Debug\Unity.Legacy.NRefactory.dll
+C:\Users\Henry\source\repos\MysteryPlanet\bin\Debug\Unity.UNetWeaver.dll
+C:\Users\Henry\source\repos\MysteryPlanet\bin\Debug\Unity.CecilTools.dll
+C:\Users\Henry\source\repos\MysteryPlanet\bin\Debug\Unity.Cecil.Pdb.dll
+C:\Users\Henry\source\repos\MysteryPlanet\bin\Debug\Unity.Cecil.Mdb.dll
+C:\Users\Henry\source\repos\MysteryPlanet\bin\Debug\UnityEditor.xml

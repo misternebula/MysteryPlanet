@@ -15,6 +15,8 @@ namespace MysteryPlanet
         public AstroObject.Name aoName;
 
         public Vector3 position;
+
+        public bool makeSpawnPoint = false;
         
         public bool hasClouds = false;
         public float? topCloudSize = null;
@@ -34,5 +36,7 @@ namespace MysteryPlanet
         public bool hasFog = false;
         public Color fogTint = Color.white;
         public float fogDensity = 0.3f;
+
+        public bool hasOrbit = false;
     }
 }

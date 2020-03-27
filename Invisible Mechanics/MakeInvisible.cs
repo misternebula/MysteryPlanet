@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace MysteryPlanet
+namespace MysteryPlanet.Invisible
 {
     static class MakeInvisible
     {

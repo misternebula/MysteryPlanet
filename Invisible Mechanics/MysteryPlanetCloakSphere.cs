@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace MysteryPlanet
+namespace MysteryPlanet.Invisible
 {
     class MysteryPlanetCloakSphere : MonoBehaviour
     {

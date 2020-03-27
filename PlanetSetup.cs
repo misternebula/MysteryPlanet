@@ -13,6 +13,7 @@ namespace MysteryPlanet
 
         public static OWRigidbody OWRB;
         public static Sector SECTOR;
+        public static SpawnPoint SPAWN;
         private void Start()
         {
             base.ModHelper.Events.Subscribe<Flashlight>(Events.AfterStart);
@@ -26,6 +27,28 @@ namespace MysteryPlanet
         void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             SceneIntegrator.isDLCEnabled = true;
+        }
+
+        void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.PageDown))
+            {
+                MoveTo(SPAWN);
+            }
+        }
+
+        public void MoveTo(SpawnPoint point)
+        {
+            if (point != null)
+            {
+                OWRigidbody playerBody = Locator.GetPlayerBody();
+
+                playerBody.WarpToPositionRotation(point.transform.position, point.transform.rotation);
+                playerBody.SetVelocity(point.GetPointVelocity());
+
+                point.AddObjectToTriggerVolumes(Locator.GetPlayerDetector().gameObject);
+                point.OnSpawnPlayer();
+            }
         }
 
         private void OnEvent(MonoBehaviour behaviour, Events ev)
@@ -51,6 +74,8 @@ namespace MysteryPlanet
 
                     position = new Vector3(0, 0, 30000),
 
+                    makeSpawnPoint = true,
+
                     hasClouds = true,
                     topCloudSize = 650f,
                     bottomCloudSize = 600f,
@@ -68,7 +93,9 @@ namespace MysteryPlanet
 
                     hasFog = true,
                     fogTint = new Color32(0, 75, 15, 128),
-                    fogDensity = 0.75f
+                    fogDensity = 0.75f,
+
+                    hasOrbit = true
                 };
 
                 generatedPlanet = GenerateBody(inputStructure);
@@ -96,36 +123,43 @@ namespace MysteryPlanet
             body.name = planet.name;
             body.SetActive(false);
             
-            MakeGeometry.Make(body, groundScale);
+            Body.MakeGeometry.Make(body, groundScale);
 
-            MakeOrbitingAstroObject.Make(body, planet.primaryBody, 0.02f, planet.surfaceAccel, groundScale);
-            MakeRFVolume.Make(body);
+            General.MakeOrbitingAstroObject.Make(body, planet.primaryBody, 0.02f, planet.hasGravity, planet.surfaceAccel, groundScale, planet.hasOrbit);
+            General.MakeRFVolume.Make(body);
 
             if (planet.hasMapMarker)
             {
-                MakeMapMarker.Make(body);
+                General.MakeMapMarker.Make(body);
             }
             
-            SECTOR = MakeSector.Make(body, planet.topCloudSize.Value);
+            SECTOR = Body.MakeSector.Make(body, planet.topCloudSize.Value);
 
             if (planet.hasClouds)
             {
-                MakeClouds.Make(body, planet.topCloudSize.Value, planet.bottomCloudSize.Value, planet.cloudTint.Value);
-                MakeSunOverride.Make(body, planet.topCloudSize.Value, planet.bottomCloudSize.Value, planet.waterSize.Value);
+                Atmosphere.MakeClouds.Make(body, planet.topCloudSize.Value, planet.bottomCloudSize.Value, planet.cloudTint.Value);
+                Atmosphere.MakeSunOverride.Make(body, planet.topCloudSize.Value, planet.bottomCloudSize.Value, planet.waterSize.Value);
             }
 
-            MakeAir.Make(body, planet.topCloudSize.Value / 2, planet.hasRain);
+            Atmosphere.MakeAir.Make(body, planet.topCloudSize.Value / 2, planet.hasRain);
 
             if (planet.hasWater)
             {
-                MakeWater.Make(body, planet.waterSize.Value);
+                Body.MakeWater.Make(body, planet.waterSize.Value);
             }
-            
-            MakeBaseEffects.Make(body);
-            MakeVolumes.Make(body, groundScale, planet.topCloudSize.Value);
-            MakeAmbientLight.Make(body);
-            MakeAtmosphere.Make(body, planet.topCloudSize.Value, planet.hasFog, planet.fogDensity, planet.fogTint);
-            MakeInvisible.Make(body, planet.topCloudSize.Value + 10f);
+
+            Atmosphere.MakeBaseEffects.Make(body);
+            Atmosphere.MakeVolumes.Make(body, groundScale, planet.topCloudSize.Value);
+            General.MakeAmbientLight.Make(body);
+            Atmosphere.MakeAtmosphere.Make(body, planet.topCloudSize.Value, planet.hasFog, planet.fogDensity, planet.fogTint);
+            Invisible.MakeInvisible.Make(body, planet.topCloudSize.Value + 10f);
+
+            if (planet.makeSpawnPoint)
+            {
+                SPAWN = General.MakeSpawnPoint.Make(body, groundScale);
+            }
+
+            Debug.MakeTempSimButton.Make(body, groundScale);
 
             return body;
         }
